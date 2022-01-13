@@ -187,7 +187,9 @@ class Git:
         if len(kwargs):
             output = []
             for k, v in kwargs.items():
-                cmd = ["git", "config", "--add", k, v]
+                # cybergis patch: add --global
+                # so username and email can be saved globally and reused by all repos
+                cmd = ["git", "config", "--global", "--add", k, v]
                 code, out, err = await execute(cmd, cwd=path)
                 output.append(out.strip())
                 response["code"] = code
